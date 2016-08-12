@@ -22,7 +22,7 @@
         <groupId>org.wso2.carbon.kubernetes.artifacts</groupId>
         <artifactId>wso2-kubernetes-artifacts</artifactId>
         <version>1.0.1-SNAPSHOT</version>
-        <relativePath>../../pom.xml</relativePath>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>kubernetes-membership-scheme</artifactId>
@@ -33,7 +33,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.sourceEncoding>UTF-8</project.reporting.sourceEncoding>
         <maven-javadoc-plugin.version>2.10.1</maven-javadoc-plugin.version>
-        <validation.script.dir>${project.basedir}/../../</validation.script.dir>
+        <validation.script.dir>${project.basedir}/../</validation.script.dir>
     </properties>
 
     <dependencies>
