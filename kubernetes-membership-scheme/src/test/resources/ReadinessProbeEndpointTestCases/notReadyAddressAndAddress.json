@@ -1,0 +1,65 @@
+{
+  "kind": "Endpoints",
+  "apiVersion": "v1",
+  "metadata": {
+    "name": "wso2is-default",
+    "namespace": "default",
+    "selfLink": "/api/v1/namespaces/default/endpoints/wso2is-default",
+    "uid": "5df0bc87-5eb7-11e6-9155-080027e9ede8",
+    "resourceVersion": "786",
+    "creationTimestamp": "2016-08-10T05:00:32Z",
+    "labels": {
+      "name": "wso2is-default"
+    }
+  },
+  "subsets": [
+    {
+      "addresses": [
+        {
+          "ip": "10.244.89.8",
+          "targetRef": {
+            "kind": "Pod",
+            "namespace": "default",
+            "name": "wso2is-default-eqimr",
+            "uid": "5dfb683e-5eb7-11e6-9155-080027e9ede8",
+            "resourceVersion": "785"
+          }
+        }
+      ],
+      "notReadyAddresses": [
+        {
+          "ip": "10.244.89.9",
+          "targetRef": {
+            "kind": "Pod",
+            "namespace": "default",
+            "name": "wso2is-default-011qv",
+            "uid": "874e4fa4-5eb7-11e6-9155-080027e9ede8",
+            "resourceVersion": "775"
+          }
+        }
+      ],
+      "ports": [
+        {
+          "name": "thrift-entitlement",
+          "port": 10500,
+          "protocol": "TCP"
+        },
+        {
+          "name": "kdc-server",
+          "port": 8000,
+          "protocol": "TCP"
+        },
+        {
+          "name": "servlet-https",
+          "port": 9443,
+          "protocol": "TCP"
+        },
+        {
+          "name": "servlet-http",
+          "port": 9763,
+          "protocol": "TCP"
+        }
+      ]
+    }
+  ]
+}

@@ -200,3 +200,11 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 
+
+===============================================================================
+The following components are licensed under Apache2 license
+===============================================================================
+
+jackson-annotations-2.5.4.jar
+jackson-core-2.5.4.jar
+jackson-databind-2.5.4.jar
