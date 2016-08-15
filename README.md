@@ -17,7 +17,7 @@ To manage configurations and artifacts when building Docker images, WSO2 recomme
 Building WSO2 Docker images using Puppet for Kubernetes:
 
   1. Clone `wso2/puppet modules` and `wso2/dockerfiles` repositories (alternatively you can download the released artifacts using the release page of the GitHub repository).
-  2. Copy the [`dependency jars`](https://docs.wso2.com/display/KA100/Kubernetes+Membership+Scheme+for+WSO2+Carbon) and relevant Kernel patches for clustering to `PUPPET_HOME/modules/<product>/files/configs/repository/components/lib` location.
+  2. Copy the `kubernetes-membership-scheme-1.0.0.jar` to `PUPPET_HOME/modules/<product>/files/configs/repository/components/dropins` location and apply relevant Kernel patches for clustering.
   3. Copy the JDK [`jdk-7u80-linux-x64.tar.gz`](http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html) to `PUPPET_HOME/modules/wso2base/files` location.
   4. Copy the [`mysql-connector-java-5.1.36-bin.jar`](http://mvnrepository.com/artifact/mysql/mysql-connector-java/5.1.36) file to `PUPPET_HOME/modules/<product>/files/configs/repository/components/lib` location.
   5. Copy the product zip file to `PUPPET_HOME/modules/wso2{product}/files` location.

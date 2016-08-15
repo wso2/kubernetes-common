@@ -10,14 +10,8 @@ Once a Carbon server starts it will query container IP addresses in the given cl
 1. For Kubernetes Membership Scheme to work, Hazelcast configuration should be made pluggable. This has to be enabled in the products in different ways. For WSO2 products that are based on Carbon 4.2.0, [apply kernel patch0012](https://docs.wso2.com/display/Carbon420/Applying+a+Patch+to+the+Kernel). For Carbon 4.4.1 based products apply [patch0005](http://product-dist.wso2.com/downloads/carbon/4.4.1/patch0005/WSO2-CARBON-PATCH-4.4.1-0005.zip). These patches include a modification in the Carbon Core component for
 allowing to add third party membership schemes. WSO2 products that are based on Carbon versions later than 4.4.1 do not need any patches to be applied (To determine the Carbon version of a particular product, please refer to the [WSO2 Release Matrix](http://wso2.com/products/carbon/release-matrix/)).
 
-2. Copy following JAR files to the `repository/components/lib` directory of the Carbon server:
-
-> These JAR files are packaged with the ZIP distribution of the Kubernetes Membership Scheme, inside the `lib` folder.
-
+2. Copy following JAR files to the `repository/components/dropins` directory of the Carbon server:
    ```
-      jackson-core-2.5.4.jar
-      jackson-databind-2.5.4.jar
-      jackson-annotations-2.5.4.jar
       kubernetes-membership-scheme-1.0.0.jar
    ```
 

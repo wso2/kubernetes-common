@@ -15,7 +15,9 @@
 ~ limitations under the License.
 ~
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -28,6 +30,7 @@
     <artifactId>kubernetes-membership-scheme</artifactId>
     <name>WSO2 Kubernetes Membership Scheme</name>
     <description>Kubernetes Membership Scheme for Carbon 4.2.0 and 4.4.x</description>
+    <packaging>bundle</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -86,6 +89,7 @@
             <plugin>
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-scr-plugin</artifactId>
+                <version>1.22.0</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.felix</groupId>
@@ -96,7 +100,7 @@
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                         <Bundle-Name>${project.artifactId}</Bundle-Name>
                         <Export-Package>
-                            org.wso2.carbon.ppaas.*,
+                            org.wso2.carbon.membership.scheme.kubernetes.*,
                         </Export-Package>
                         <Import-Package>
                             !org.apache.commons.logging,
@@ -104,6 +108,9 @@
                             *;resolution:=optional
                         </Import-Package>
                         <DynamicImport-Package>*</DynamicImport-Package>
+                        <Embed-Dependency>
+                            *;scope=compile|runtime
+                        </Embed-Dependency>
                     </instructions>
                 </configuration>
             </plugin>
@@ -119,7 +126,8 @@
                         </goals>
                         <configuration>
                             <excludeScope>provided</excludeScope>
-                            <outputDirectory>${project.build.directory}/dependencies</outputDirectory>
+                            <outputDirectory>${project.build.directory}/dependencies
+                            </outputDirectory>
                         </configuration>
                     </execution>
                 </executions>
