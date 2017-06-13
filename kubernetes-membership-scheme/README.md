@@ -15,21 +15,47 @@ allowing to add third party membership schemes. WSO2 products that are based on 
       kubernetes-membership-scheme-1.0.0.jar
    ```
 
-3. Update `axis2.xml` with the following configuration:
+3. Update `axis2.xml` with the following configuration: Please note that you don't need to change localMemberHost value as it will be read from API call.
 
    ```xml
-   <clustering class="org.wso2.carbon.core.clustering.hazelcast.HazelcastClusteringAgent" enable="true">
-      <parameter name="membershipSchemeClassName">org.wso2.carbon.membership.scheme.kubernetes.KubernetesMembershipScheme</parameter>
-      <parameter name="membershipScheme">kubernetes</parameter>
-      <!-- Kubernetes master API endpoint -->
-      <parameter name="KUBERNETES_MASTER">http://172.17.8.101:8080</parameter>
-      <!-- Kubernetes service(s) the carbon server belongs to, use comma separated values for specifying
-           multiple values. If multiple services defined, carbon server will connect to all the members
-           in all the services via Hazelcast -->
-      <parameter name="KUBERNETES_SERVICES">wso2esb</parameter>
-      <!-- Kubernetes namespace used -->
-      <parameter name="KUBERNETES_NAMESPACE">default</parameter>
-   </clustering>
+   <clustering class="org.wso2.carbon.core.clustering.hazelcast.HazelcastClusteringAgent"
+                   enable="true">
+   
+         
+           <parameter name="AvoidInitiation">true</parameter>
+   
+           <parameter name="membershipScheme">kubernetes</parameter>
+           <parameter name="domain">pub.store.am.wso2.domain</parameter>
+   
+           <parameter name="mcastPort">45564</parameter>
+           <parameter name="mcastTTL">100</parameter>
+           <parameter name="mcastTimeout">60</parameter>
+   
+           <parameter name="localMemberHost">172.17.0.2</parameter>
+           <parameter name="localMemberPort">4000</parameter>
+   
+           <!--
+           Properties specific to this member
+           -->
+           <parameter name="properties">
+               <property name="backendServerURL" value="https://${hostName}:${httpsPort}/services/"/>
+               <property name="mgtConsoleURL" value="https://${hostName}:${httpsPort}/"/>
+               <property name="subDomain" value="worker"/>
+           </parameter>
+   
+           <parameter name="membershipSchemeClassName">org.wso2.carbon.membership.scheme.kubernetes.KubernetesMembershipScheme</parameter>
+           <parameter name="KUBERNETES_NAMESPACE">wso2-demo</parameter>
+           <parameter name="KUBERNETES_SERVICES">store,publisher</parameter>
+           <parameter name="KUBERNETES_MASTER_SKIP_SSL_VERIFICATION">true</parameter>
+   
+           <groupManagement enable="false">
+               <applicationDomain name="wso2.apim.domain"
+                                  description="APIM group"
+                           ``       agent="org.wso2.carbon.core.clustering.hazelcast.HazelcastGroupManagementAgent"
+                                  subDomain="worker"
+                                  port="2222"/>
+           </groupManagement>
+       </clustering>
 ```
 
 ### Clustering Parameters
