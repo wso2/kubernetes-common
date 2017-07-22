@@ -115,6 +115,7 @@ public class ReadinessProbeEndpointTestCases {
                         "http://localhost:" + MOCK_SERVER_PORT));
         parameters.put(Constants.PARAMETER_NAME_KUBERNETES_SERVICES,
                 new Parameter(Constants.PARAMETER_NAME_KUBERNETES_SERVICES, services));
+        parameters.put(Constants.USE_DNS, new Parameter(Constants.USE_DNS, "false"));
 
         messageBuffer = new ArrayList<>();
         primaryHazelcastConfig = new Config();
