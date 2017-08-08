@@ -310,6 +310,11 @@
                 <artifactId>mockserver-netty</artifactId>
                 <version>${mockserver.version}</version>
             </dependency>
+            <dependency>
+                <groupId>dnsjava</groupId>
+                <artifactId>dnsjava</artifactId>
+                <version>${dnsjava.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -325,6 +330,7 @@
         <ppaas.version>4.1.5</ppaas.version>
         <mockserver.version>3.10.4</mockserver.version>
         <testng.version>6.9.9</testng.version>
+        <dnsjava.version>2.1.8</dnsjava.version>
         <project.scm.id>my-scm-server</project.scm.id>
     </properties>
 </project>

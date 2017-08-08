@@ -31,4 +31,6 @@ public class Constants {
     public static final String KUBERNETES_SERVICE_PORT_HTTPS = "KUBERNETES_SERVICE_PORT_HTTPS";
     public static final String ENDPOINTS_API_CONTEXT = "/api/v1/namespaces/%s/endpoints/";
     public static final String PROTOCOL_HTTPS = "https";
+    public static final String DNS_LOOKUP_TIMEOUT = "DNS_LOOKUP_TIMEOUT";
+    public static final String USE_DNS = "USE_DNS";
 }
