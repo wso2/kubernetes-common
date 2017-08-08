@@ -85,8 +85,10 @@ public class KubernetesMembershipScheme implements HazelcastMembershipScheme {
             AddressResolver podIpResolver;
             Set<String> containerIPs;
             if (Boolean.parseBoolean(useDns)) {
+                log.debug("Using DNS based pod ip resolving method");
                 podIpResolver = new DNSBasedPodIpResolver(parameters);
             } else {
+                log.debug("Using API based pod ip resolving method");
                 podIpResolver = new ApiBasedPodIpResolver(parameters);
             }
             containerIPs = podIpResolver.resolveAddresses();

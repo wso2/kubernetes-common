@@ -154,7 +154,7 @@ public class ApiBasedPodIpResolver extends AddressResolver {
                     }
                 }
             } else {
-                log.info("No endpoints found at " + apiEndpointUrl.toString());
+                throw new KubernetesMembershipSchemeException("No endpoints found at " + apiEndpointUrl.toString());
             }
         }
 
