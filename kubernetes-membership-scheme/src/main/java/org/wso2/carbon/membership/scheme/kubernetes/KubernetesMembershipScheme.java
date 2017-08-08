@@ -92,6 +92,11 @@ public class KubernetesMembershipScheme implements HazelcastMembershipScheme {
                 podIpResolver = new ApiBasedPodIpResolver(parameters);
             }
             containerIPs = podIpResolver.resolveAddresses();
+            // if no IPs are found, can't initialize clustering
+            if (containerIPs.isEmpty()) {
+                throw new KubernetesMembershipSchemeException("No member ips found, unable to initialize the "
+                        + "Kubernetes membership scheme");
+            }
 
             for (String containerIP : containerIPs) {
                 tcpIpConfig.addMember(containerIP);
