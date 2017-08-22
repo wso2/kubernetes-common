@@ -24,7 +24,7 @@ The Kubernetes membership scheme supports findind the pod IPs in two ways:
 
 The membership scheme queries the Kubernetes API for the relevant pod IP addresses. To configure the membership scheme to use the Kubernetes API, do the following configuration changes: 
 
-2. Update `<carbon_home>/repository/conf/axis2/axis2.xml` with the following configuration: Please note that you don't need to change localMemberHost value as it will be read from API call.
+1. Update `<carbon_home>/repository/conf/axis2/axis2.xml` with the following configuration: Please note that you don't need to change localMemberHost value as it will be read from API call.
 
    ```xml
    <clustering class="org.wso2.carbon.core.clustering.hazelcast.HazelcastClusteringAgent"
@@ -74,7 +74,7 @@ The membership scheme queries the Kubernetes API for the relevant pod IP address
 4. `KUBERNETES_NAMESPACE` - Kubernetes Namespace in which the pods are deployed, **ex:** `default`
 5. `KUBERNETES_SERVICES` - Kubernetes Services that belong in the cluster, **ex:** `wso2am-gateway`
 6. `KUBERNETES_MASTER_SKIP_SSL_VERIFICATION ` - Skip SSL certificate verification of the Kubernetes API (development option), **ex:** `true`
-7. `USE_DNS ` - Configure the membership schme to either use DNS (default) or use the Kuberntes APIfor pod ip resolution, **ex:** `false`
+7. `USE_DNS` - Configure the membership schme to either use DNS (default) or use the Kuberntes APIfor pod ip resolution, **ex:** `false`
 
 #### Using DNS Lookups to Resolve Pod IPs
 
