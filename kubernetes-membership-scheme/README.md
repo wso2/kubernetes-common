@@ -65,9 +65,9 @@ The membership scheme queries the Kubernetes API for the relevant pod IP address
                                   port="2222"/>
            </groupManagement>
        </clustering>
-```
 
 #### Clustering Parameters required to communicate with the Kuberntes API
+
 1. `KUBERNETES_MASTER` - Kubernetes API endpoint, **ex:** `http://172.17.8.101:8080`
 2. `KUBERNETES_MASTER_USERNAME` - Kubernetes Master username (optional), **ex:** `admin`
 3. `KUBERNETES_MASTER_PASSWORD` - Kubernetes Master password (optional), **ex:** `admin`
@@ -118,7 +118,6 @@ In this method, membership scheme performs DNS lookups to resolve pod IP address
                                   port="2222"/>
            </groupManagement>
        </clustering>
-```
 
 #### Clustering Parameters required to perform DNS Lookups
 1. `KUBERNETES_SERVICES` - Kubernetes Services that belong in the cluster. Multiple services can be specified comma separated, **ex:** `wso2apim-manager-worker,wso2apim-worker`
