@@ -74,13 +74,15 @@ The membership scheme queries the Kubernetes API for the relevant pod IP address
 4. `KUBERNETES_NAMESPACE` - Kubernetes Namespace in which the pods are deployed, **ex:** `default`
 5. `KUBERNETES_SERVICES` - Kubernetes Services that belong in the cluster, **ex:** `wso2am-gateway`
 6. `KUBERNETES_MASTER_SKIP_SSL_VERIFICATION ` - Skip SSL certificate verification of the Kubernetes API (development option), **ex:** `true`
-7. `USE_DNS` - Configure the membership schme to either use DNS (default) or use the Kuberntes APIfor pod ip resolution, **ex:** `false`
+7. `USE_DNS` - Configure the membership schme to either use DNS (default) or use the Kuberntes API for pod ip resolution, **ex:** `false`. To use the Kubernetes API, this value **must** be set to `false`. 
 
 #### Using DNS Lookups to Resolve Pod IPs
 
 In this method, membership scheme performs DNS lookups to resolve pod IP addresses. This method will be used by default. To configure the membership scheme to use DNS lookups, do the following configuration changes: 
 
-1. Update `<carbon_home>/repository/conf/axis2/axis2.xml` with the following configuration: Please note that you don't need to change localMemberHost value as it will be read from API call.
+1. Download and copy the dependency library for DNS lookups [dnsjava-2.1.8.jar](http://central.maven.org/maven2/dnsjava/dnsjava/2.1.8/dnsjava-2.1.8.jar) to <carbon_home>/repository/components/lib location.
+
+2. Update `<carbon_home>/repository/conf/axis2/axis2.xml` with the following configuration: Please note that you don't need to change localMemberHost value as it will be read from API call.
 
    ```xml
    <clustering class="org.wso2.carbon.core.clustering.hazelcast.HazelcastClusteringAgent"
@@ -122,4 +124,4 @@ In this method, membership scheme performs DNS lookups to resolve pod IP address
 #### Clustering Parameters required to perform DNS Lookups
 1. `KUBERNETES_SERVICES` - Kubernetes Services that belong in the cluster. Multiple services can be specified comma separated, **ex:** `wso2apim-manager-worker,wso2apim-worker`
 
-##### Note: The services which are used to for the DNS lookup should be 'headless' with no cluster IP. Please refer [Kuberntes DNS guide] (https://github.com/kubernetes/kubernetes/tree/v1.0.6/cluster/addons/dns#a-records).
+##### Note: The services which are used to for the DNS lookup should be 'headless' with no cluster IP. Please refer [Kuberntes DNS guide](https://github.com/kubernetes/kubernetes/tree/v1.0.6/cluster/addons/dns#a-records).
