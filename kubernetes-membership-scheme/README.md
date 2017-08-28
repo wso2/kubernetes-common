@@ -24,7 +24,8 @@ The Kubernetes membership scheme supports findind the pod IPs in two ways:
 
 The membership scheme queries the Kubernetes API for the relevant pod IP addresses. To configure the membership scheme to use the Kubernetes API, do the following configuration changes: 
 
-1. Update `<carbon_home>/repository/conf/axis2/axis2.xml` with the following configuration: Please note that you don't need to change localMemberHost value as it will be read from API call.
+1. Update `<carbon_home>/repository/conf/axis2/axis2.xml` with the following configuration: Please note that you need
+ to change localMemberHost value with pod's local ip address [refer](https://github.com/wso2/kubernetes-apim/blob/2.1.0/base/analytics/init_carbon.sh#L24). 
 
    ```xml
    <clustering class="org.wso2.carbon.core.clustering.hazelcast.HazelcastClusteringAgent"
@@ -82,7 +83,8 @@ In this method, membership scheme performs DNS lookups to resolve pod IP address
 
 1. Download and copy the dependency library for DNS lookups [dnsjava-2.1.8.jar](http://central.maven.org/maven2/dnsjava/dnsjava/2.1.8/dnsjava-2.1.8.jar) to <carbon_home>/repository/components/lib location.
 
-2. Update `<carbon_home>/repository/conf/axis2/axis2.xml` with the following configuration: Please note that you don't need to change localMemberHost value as it will be read from API call.
+2. Update `<carbon_home>/repository/conf/axis2/axis2.xml` with the following configuration: Please note that you need
+ to change localMemberHost value with pod's local ip address [refer](https://github.com/wso2/kubernetes-apim/blob/2.1.0/base/analytics/init_carbon.sh#L24). 
 
    ```xml
    <clustering class="org.wso2.carbon.core.clustering.hazelcast.HazelcastClusteringAgent"
