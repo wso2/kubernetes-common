@@ -111,6 +111,7 @@ In this method, membership scheme performs DNS lookups to resolve pod IP address
    
            <parameter name="membershipSchemeClassName">org.wso2.carbon.membership.scheme.kubernetes.KubernetesMembershipScheme</parameter>
            <parameter name="KUBERNETES_SERVICES">store,publisher</parameter>
+           <parameter name="KUBERNETES_NAMESPACE">wso2-demo</parameter>
    
            <groupManagement enable="false">
                <applicationDomain name="wso2.apim.domain"
@@ -123,5 +124,5 @@ In this method, membership scheme performs DNS lookups to resolve pod IP address
 
 #### Clustering Parameters required to perform DNS Lookups
 1. `KUBERNETES_SERVICES` - Kubernetes Services that belong in the cluster. Multiple services can be specified comma separated, **ex:** `wso2apim-manager-worker,wso2apim-worker`
-
+2. `KUBERNETES_NAMESPACE` - Kubernetes Namespace in which the pods are deployed, **ex:** `default`
 ##### Note: The services which are used to for the DNS lookup should be 'headless' with no cluster IP. Please refer [Kuberntes DNS guide](https://github.com/kubernetes/kubernetes/tree/v1.0.6/cluster/addons/dns#a-records).
