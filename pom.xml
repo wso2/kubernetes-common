@@ -45,46 +45,6 @@
     <build>
         <plugins>
             <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <!--inherited>true</inherited-->
-                <version>2.5.3</version>
-                <configuration>
-                    <descriptor>package.xml</descriptor>
-                    <appendAssemblyId>false</appendAssemblyId>
-                    <!--runOnlyAtExecutionRoot>true</runOnlyAtExecutionRoot-->
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>create-archive</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>1.2</version>
-                <executions>
-                    <execution>
-                        <id>compile</id>
-                        <configuration>
-                            <executable>ruby</executable>
-                            <workingDirectory>${validation.script.dir}</workingDirectory>
-                            <arguments>
-                                <argument>validate-yaml.rb</argument>
-                            </arguments>
-                        </configuration>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-release-plugin</artifactId>
                 <configuration>
