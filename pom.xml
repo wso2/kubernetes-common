@@ -27,7 +27,7 @@
     <groupId>org.wso2.carbon.kubernetes.artifacts</groupId>
     <artifactId>wso2-kubernetes-artifacts</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.1</version>
     <name>WSO2 Kubernetes Artifacts</name>
     <description>WSO2 Kubernetes Artifacts</description>
 
