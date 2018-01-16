@@ -65,19 +65,24 @@ public class DNSBasedPodIpResolver extends AddressResolver {
             Lookup lookup = buildLookup(dnsLookupName);
             Record[] records = lookup.run();
 
-            if (lookup.getResult() != Lookup.SUCCESSFUL) {
-                throw new KubernetesMembershipSchemeException("DNS lookup for name '" + dnsLookupName + "' failed");
-            }
-
-            for (Record record : records) {
-                SRVRecord srv = (SRVRecord) record;
-                InetAddress[] inetAddresses = getAddresses(srv);
-
-                for (InetAddress inetAddress : inetAddresses) {
-                    log.info("Found IP address " + inetAddress.getHostAddress() + "  for DNS lookup: " +
-                            dnsLookupName + ", SRV Record name: " + srv.getName().toString());
-                    containerIPs.add(inetAddress.getHostAddress());
+            if (lookup.getResult() == Lookup.SUCCESSFUL && records != null) {
+                if (log.isDebugEnabled()) {
+                    log.debug("Number of DNS records found for lookup address: " + dnsLookupName + ": " +
+                            records.length);
                 }
+                for (Record record : records) {
+                    SRVRecord srv = (SRVRecord) record;
+                    InetAddress[] inetAddresses = getAddresses(srv);
+
+                    for (InetAddress inetAddress : inetAddresses) {
+                        log.info("Found IP address " + inetAddress.getHostAddress() + "  for DNS lookup: " +
+                                dnsLookupName + ", SRV Record name: " + srv.getName().toString());
+                        containerIPs.add(inetAddress.getHostAddress());
+                    }
+                }
+
+            } else {
+                log.warn("DNS lookup for name '" + dnsLookupName + "' failed");
             }
         }
 
