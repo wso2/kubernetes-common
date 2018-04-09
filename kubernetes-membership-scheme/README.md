@@ -73,10 +73,10 @@ The membership scheme queries the Kubernetes API for the relevant pod IP address
     - Alternatively an https endpoint can be set through:
         2. `KUBERNETES_SERVICE_HOST` - Kubernetes API host name or ip, **ex:** `kuberneteshostname`
         3. `KUBERNETES_SERVICE_PORT_HTTPS` - Kubernetes API https listening port, **ex:** `443`. Must be an Integer value.
-2. `KUBERNETES_MASTER_TOKEN` - Kubernetes Master token for authentication (optional), **ex:** `yourkubernetestoken`.
+2. `KUBERNETES_API_SERVER_TOKEN` - Kubernetes Master token for authentication (optional), **ex:** `yourkubernetestoken`.
     - Alternatively basic authentication can be set through:
-        1. `KUBERNETES_MASTER_USERNAME` - Kubernetes Master username (optional), **ex:** `admin`
-        2. `KUBERNETES_MASTER_PASSWORD` - Kubernetes Master password (optional), **ex:** `admin`
+        1. `KUBERNETES_API_SERVER_USERNAME` - Kubernetes Master username (optional), **ex:** `admin`
+        2. `KUBERNETES_API_SERVER_PASSWORD` - Kubernetes Master password (optional), **ex:** `admin`
 3. `KUBERNETES_NAMESPACE` - Kubernetes Namespace in which the pods are deployed, **ex:** `default`
 4. `KUBERNETES_SERVICES` - Kubernetes Services that belong in the cluster, **ex:** `wso2am-gateway`
 5. `KUBERNETES_MASTER_SKIP_SSL_VERIFICATION` - Skip SSL certificate verification of the Kubernetes API (development option), **ex:** `true`
