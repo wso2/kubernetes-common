@@ -47,6 +47,7 @@ public class ApiBasedPodIpResolver extends AddressResolver {
     private String kubernetesApiServerUrl;
     private String kubernetesMasterUsername;
     private String kubernetesMasterPassword;
+    private String kubernatesMasterToken;
     private boolean skipMasterSSLVerification = false;
 
     public ApiBasedPodIpResolver (final Map<String, Parameter> parameters) throws KubernetesMembershipSchemeException {
@@ -59,6 +60,7 @@ public class ApiBasedPodIpResolver extends AddressResolver {
         kubernetesApiServerUrl = System.getenv(Constants.PARAMETER_NAME_KUBERNETES_API_SERVER);
         kubernetesMasterUsername = System.getenv(Constants.PARAMETER_NAME_KUBERNETES_API_SERVER_USERNAME);
         kubernetesMasterPassword = System.getenv(Constants.PARAMETER_NAME_KUBERNETES_API_SERVER_PASSWORD);
+        kubernatesMasterToken = System.getenv(Constants.PARAMETER_NAME_KUBERNETES_API_SERVER_TOKEN);
         String skipMasterVerificationValue = System.getenv(Constants
                 .PARAMETER_NAME_KUBERNETES_MASTER_SKIP_SSL_VERIFICATION);
 
@@ -100,6 +102,10 @@ public class ApiBasedPodIpResolver extends AddressResolver {
             kubernetesMasterPassword = getParameterValue(Constants.PARAMETER_NAME_KUBERNETES_API_SERVER_PASSWORD, "");
         }
 
+        if (StringUtils.isEmpty(kubernatesMasterToken)) {
+            kubernatesMasterToken = getParameterValue(Constants.PARAMETER_NAME_KUBERNETES_API_SERVER_TOKEN, "");
+        }
+
         if (StringUtils.isEmpty(skipMasterVerificationValue)) {
             skipMasterVerificationValue = getParameterValue(Constants.PARAMETER_NAME_KUBERNETES_MASTER_SKIP_SSL_VERIFICATION, "false");
         }
@@ -127,7 +133,7 @@ public class ApiBasedPodIpResolver extends AddressResolver {
             Endpoints endpoints;
             try {
                 endpoints = getEndpoints(connectAndRead
-                        (apiEndpoint, kubernetesMasterUsername, kubernetesMasterPassword));
+                        (apiEndpoint, kubernetesMasterUsername, kubernetesMasterPassword, kubernatesMasterToken));
 
             } catch (IOException e) {
                 throw new KubernetesMembershipSchemeException("Could not get the Endpoints", e);
@@ -197,11 +203,13 @@ public class ApiBasedPodIpResolver extends AddressResolver {
     }
 
     private InputStream connectAndRead(KubernetesApiEndpoint endpoint, String
-            username, String password) throws KubernetesMembershipSchemeException {
+            username, String password, String token) throws KubernetesMembershipSchemeException {
 
         try {
             // Use basic auth to create the connection if username and password are specified
-            if (!StringUtils.isEmpty(username) && !StringUtils.isEmpty(password)) {
+            if (!StringUtils.isEmpty(token)) {
+                endpoint.createConnection(token);
+            } else if (!StringUtils.isEmpty(username) && !StringUtils.isEmpty(password)) {
                 endpoint.createConnection(username, password);
             } else {
                 endpoint.createConnection();

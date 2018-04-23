@@ -40,11 +40,18 @@ public abstract class KubernetesApiEndpoint {
 
     public abstract void createConnection(String username, String password) throws IOException;
 
+
     public InputStream read() throws IOException {
         return connection.getInputStream();
     }
 
     public abstract void disconnect();
+
+    public void createConnection(String token) throws IOException {
+        String tokenAuth = "Bearer " + token;
+        connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestProperty("Authorization", tokenAuth);
+    }
 
     void createBasicAuthenticationHeader(String username, String password) {
         log.debug("Generating basic auth header...");
