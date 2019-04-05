@@ -1,18 +1,18 @@
 /*
- * Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+* Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+* http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
 
 package org.wso2.carbon.membership.scheme.kubernetes;
 
@@ -50,29 +50,25 @@ public class KubernetesMembershipScheme implements HazelcastMembershipScheme {
     private HazelcastCarbonClusterImpl carbonCluster;
 
     public KubernetesMembershipScheme(Map<String, Parameter> parameters, String primaryDomain, Config config,
-                                      HazelcastInstance primaryHazelcastInstance, List<ClusteringMessage> messageBuffer) {
+            HazelcastInstance primaryHazelcastInstance, List<ClusteringMessage> messageBuffer) {
         this.parameters = parameters;
         this.primaryHazelcastInstance = primaryHazelcastInstance;
         this.messageBuffer = messageBuffer;
         this.nwConfig = config.getNetworkConfig();
     }
 
-    @Override
-    public void setPrimaryHazelcastInstance(HazelcastInstance primaryHazelcastInstance) {
+    @Override public void setPrimaryHazelcastInstance(HazelcastInstance primaryHazelcastInstance) {
         this.primaryHazelcastInstance = primaryHazelcastInstance;
     }
 
-    @Override
-    public void setLocalMember(Member localMember) {
+    @Override public void setLocalMember(Member localMember) {
     }
 
-    @Override
-    public void setCarbonCluster(HazelcastCarbonClusterImpl hazelcastCarbonCluster) {
+    @Override public void setCarbonCluster(HazelcastCarbonClusterImpl hazelcastCarbonCluster) {
         this.carbonCluster = hazelcastCarbonCluster;
     }
 
-    @Override
-    public void init() throws ClusteringFault {
+    @Override public void init() throws ClusteringFault {
         try {
             log.info("Initializing kubernetes membership scheme...");
 
@@ -128,8 +124,7 @@ public class KubernetesMembershipScheme implements HazelcastMembershipScheme {
         return (String) kubernetesServicesParam.getValue();
     }
 
-    @Override
-    public void joinGroup() throws ClusteringFault {
+    @Override public void joinGroup() throws ClusteringFault {
         primaryHazelcastInstance.getCluster().addMembershipListener(new KubernetesMembershipSchemeListener());
     }
 
@@ -142,13 +137,13 @@ public class KubernetesMembershipScheme implements HazelcastMembershipScheme {
      */
     private class KubernetesMembershipSchemeListener implements MembershipListener {
 
-        @Override
-        public void memberAdded(MembershipEvent membershipEvent) {
+        @Override public void memberAdded(MembershipEvent membershipEvent) {
             Member member = membershipEvent.getMember();
             List<String> memberList = nwConfig.getJoin().getTcpIpConfig().setEnabled(true).getMembers();
             if (!memberList.contains(member.getSocketAddress().getAddress().getHostAddress())) {
                 nwConfig.getJoin().getTcpIpConfig().setEnabled(true).addMember(String.valueOf(member.getSocketAddress().getAddress().getHostAddress()));
             }
+
             // Send all cluster messages
             carbonCluster.memberAdded(member);
             log.info(String.format("Member joined: [UUID] %s, [Address] %s", member.getUuid(),
@@ -162,19 +157,16 @@ public class KubernetesMembershipScheme implements HazelcastMembershipScheme {
             log.info(String.format("Current member list: %s", nwConfig.getJoin().getTcpIpConfig().setEnabled(true).getMembers()));
         }
 
-        @Override
-        public void memberRemoved(MembershipEvent membershipEvent) {
+        @Override public void memberRemoved(MembershipEvent membershipEvent) {
             Member member = membershipEvent.getMember();
             carbonCluster.memberRemoved(member);
             log.info(String.format("Member left: [UUID] %s, [Address] %s", member.getUuid(),
                     member.getSocketAddress().toString()));
             nwConfig.getJoin().getTcpIpConfig().setEnabled(true).getMembers().remove(String.valueOf(member.getSocketAddress().getAddress().getHostAddress()));
             log.info(String.format("Current member list: %s", nwConfig.getJoin().getTcpIpConfig().setEnabled(true).getMembers()));
-
         }
 
-        @Override
-        public void memberAttributeChanged(MemberAttributeEvent memberAttributeEvent) {
+        @Override public void memberAttributeChanged(MemberAttributeEvent memberAttributeEvent) {
             if (log.isDebugEnabled()) {
                 log.debug(String.format("Member attribute changed: [Key] %s, [Value] %s", memberAttributeEvent.getKey(),
                         memberAttributeEvent.getValue()));
