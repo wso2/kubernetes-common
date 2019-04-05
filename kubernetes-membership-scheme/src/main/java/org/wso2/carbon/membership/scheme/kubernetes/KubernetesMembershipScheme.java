@@ -141,7 +141,8 @@ public class KubernetesMembershipScheme implements HazelcastMembershipScheme {
             Member member = membershipEvent.getMember();
             List<String> memberList = nwConfig.getJoin().getTcpIpConfig().setEnabled(true).getMembers();
             if (!memberList.contains(member.getSocketAddress().getAddress().getHostAddress())) {
-                nwConfig.getJoin().getTcpIpConfig().setEnabled(true).addMember(String.valueOf(member.getSocketAddress().getAddress().getHostAddress()));
+                nwConfig.getJoin().getTcpIpConfig().setEnabled(true)
+                        .addMember(String.valueOf(member.getSocketAddress().getAddress().getHostAddress()));
             }
 
             // Send all cluster messages
@@ -154,7 +155,10 @@ public class KubernetesMembershipScheme implements HazelcastMembershipScheme {
             } catch (InterruptedException ignored) {
             }
             HazelcastUtil.sendMessagesToMember(messageBuffer, member, carbonCluster);
-            log.info(String.format("Current member list: %s", nwConfig.getJoin().getTcpIpConfig().setEnabled(true).getMembers()));
+            if (log.isInfoEnabled()) {
+                log.info(String.format("Current member list: %s",
+                        nwConfig.getJoin().getTcpIpConfig().setEnabled(true).getMembers()));
+            }
         }
 
         @Override public void memberRemoved(MembershipEvent membershipEvent) {
@@ -162,8 +166,12 @@ public class KubernetesMembershipScheme implements HazelcastMembershipScheme {
             carbonCluster.memberRemoved(member);
             log.info(String.format("Member left: [UUID] %s, [Address] %s", member.getUuid(),
                     member.getSocketAddress().toString()));
-            nwConfig.getJoin().getTcpIpConfig().setEnabled(true).getMembers().remove(String.valueOf(member.getSocketAddress().getAddress().getHostAddress()));
-            log.info(String.format("Current member list: %s", nwConfig.getJoin().getTcpIpConfig().setEnabled(true).getMembers()));
+            nwConfig.getJoin().getTcpIpConfig().setEnabled(true)
+                    .getMembers().remove(String.valueOf(member.getSocketAddress().getAddress().getHostAddress()));
+            if (log.isInfoEnabled()) {
+                log.info(String.format("Current member list: %s",
+                        nwConfig.getJoin().getTcpIpConfig().setEnabled(true).getMembers()));
+            }
         }
 
         @Override public void memberAttributeChanged(MemberAttributeEvent memberAttributeEvent) {
