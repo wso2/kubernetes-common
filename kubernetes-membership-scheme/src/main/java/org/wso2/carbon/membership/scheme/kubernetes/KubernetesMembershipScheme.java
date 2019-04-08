@@ -79,7 +79,6 @@ public class KubernetesMembershipScheme implements HazelcastMembershipScheme {
      *
      * @return IP addresses of the current pods. Returns null upon any error querying K8S.
      */
-
     private Set<String> getK8sPodIpAddresses() throws KubernetesMembershipSchemeException {
         Set<String> containerIps = podIpResolver.resolveAddresses();
         if (containerIps != null) {
@@ -93,7 +92,6 @@ public class KubernetesMembershipScheme implements HazelcastMembershipScheme {
      * Initiates the Pod IP resolver.
      * Uses the DNS based pod IP resolver or the API based pod IP resolver.
      */
-
     private void initPodIpResolver() throws KubernetesMembershipSchemeException {
         String useDns = System.getenv(Constants.USE_DNS);
         if (StringUtils.isEmpty(useDns)) {
