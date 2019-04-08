@@ -111,6 +111,8 @@ public class KubernetesMembershipScheme implements HazelcastMembershipScheme {
     @Override public void init() throws ClusteringFault {
         try {
             log.info("Initializing kubernetes membership scheme...");
+            nwConfig.getJoin().getMulticastConfig().setEnabled(false);
+            nwConfig.getJoin().getAwsConfig().setEnabled(false);
             TcpIpConfig tcpIpConfig = nwConfig.getJoin().getTcpIpConfig();
             tcpIpConfig.setEnabled(true);
             initPodIpResolver();
@@ -156,10 +158,6 @@ public class KubernetesMembershipScheme implements HazelcastMembershipScheme {
         return parameters.get(name);
     }
 
-    private boolean notInMemberList(Set containerIPs, String ipAddress){
-        return !containerIPs.contains(ipAddress);
-    }
-
     /**
      * Kubernetes membership scheme listener
      */
@@ -168,8 +166,8 @@ public class KubernetesMembershipScheme implements HazelcastMembershipScheme {
         @Override public void memberAdded(MembershipEvent membershipEvent) {
             Member member = membershipEvent.getMember();
             TcpIpConfig tcpIpConfig = nwConfig.getJoin().getTcpIpConfig();
-            String memberIP = member.getSocketAddress().getAddress().getHostAddress();
-            if (notInMemberList((Set) tcpIpConfig.getMembers(), memberIP)) {
+            List <String> memberList = tcpIpConfig.getMembers();
+            if (!memberList.contains(member.getSocketAddress().getAddress().getHostAddress())){
                 tcpIpConfig.addMember(String.valueOf(member.getSocketAddress().getAddress().getHostAddress()));
             }
 
@@ -196,7 +194,7 @@ public class KubernetesMembershipScheme implements HazelcastMembershipScheme {
             String memberIp = member.getSocketAddress().getAddress().getHostAddress();
             try {
                 containerIPs = getK8sPodIpAddresses();
-                if (notInMemberList(containerIPs,memberIp)){
+                if (!containerIPs.contains(memberIp)){
                     tcpIpConfig.getMembers()
                             .remove(String.valueOf(member.getSocketAddress().getAddress().getHostAddress()));
                     log.info(String.format("Member left: [UUID] %s, [Address] %s", member.getUuid(),
