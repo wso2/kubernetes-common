@@ -114,7 +114,7 @@ public class KubernetesMembershipScheme implements HazelcastMembershipScheme {
             TcpIpConfig tcpIpConfig = nwConfig.getJoin().getTcpIpConfig();
             tcpIpConfig.setEnabled(true);
             initPodIpResolver();
-            Set <String> containerIPs = getK8sPodIpAddresses();
+            Set<String> containerIPs = getK8sPodIpAddresses();
             // if no IPs are found, can't initialize clustering
             if (containerIPs.isEmpty()) {
                 throw new KubernetesMembershipSchemeException("No member ips found, unable to initialize the "
@@ -122,7 +122,7 @@ public class KubernetesMembershipScheme implements HazelcastMembershipScheme {
             }
 
             for (String containerIP : containerIPs) {
-                if(!containerIP.equals(Inet4Address.getLocalHost().getHostAddress())) {
+                if (!containerIP.equals(Inet4Address.getLocalHost().getHostAddress())) {
                     tcpIpConfig.addMember(containerIP);
                     log.info("Member added to cluster configuration: [container-ip] " + containerIP);
                 }
@@ -164,8 +164,8 @@ public class KubernetesMembershipScheme implements HazelcastMembershipScheme {
         @Override public void memberAdded(MembershipEvent membershipEvent) {
             Member member = membershipEvent.getMember();
             TcpIpConfig tcpIpConfig = nwConfig.getJoin().getTcpIpConfig();
-            List <String> memberList = tcpIpConfig.getMembers();
-            if (!memberList.contains(member.getSocketAddress().getAddress().getHostAddress())){
+            List<String> memberList = tcpIpConfig.getMembers();
+            if (!memberList.contains(member.getSocketAddress().getAddress().getHostAddress())) {
                 tcpIpConfig.addMember(String.valueOf(member.getSocketAddress().getAddress().getHostAddress()));
             }
 
@@ -180,7 +180,7 @@ public class KubernetesMembershipScheme implements HazelcastMembershipScheme {
             }
             HazelcastUtil.sendMessagesToMember(messageBuffer, member, carbonCluster);
             if (log.isDebugEnabled()) {
-                log.debug(String.format("Current member list: %s",tcpIpConfig.getMembers()));
+                log.debug(String.format("Current member list: %s", tcpIpConfig.getMembers()));
             }
         }
 
@@ -188,21 +188,21 @@ public class KubernetesMembershipScheme implements HazelcastMembershipScheme {
             Member member = membershipEvent.getMember();
             carbonCluster.memberRemoved(member);
             TcpIpConfig tcpIpConfig = nwConfig.getJoin().getTcpIpConfig();
-            Set <String> containerIPs;
+            Set<String> containerIPs;
             String memberIp = member.getSocketAddress().getAddress().getHostAddress();
             try {
                 containerIPs = getK8sPodIpAddresses();
-                if (!containerIPs.contains(memberIp)){
+                if (!containerIPs.contains(memberIp)) {
                     tcpIpConfig.getMembers()
                             .remove(String.valueOf(member.getSocketAddress().getAddress().getHostAddress()));
                     log.info(String.format("Member left: [UUID] %s, [Address] %s", member.getUuid(),
                             member.getSocketAddress().toString()));
                     if (log.isDebugEnabled()) {
-                        log.debug(String.format("Current member list: %s",tcpIpConfig.getMembers()));
+                        log.debug(String.format("Current member list: %s", tcpIpConfig.getMembers()));
                     }
                 }
             } catch (KubernetesMembershipSchemeException e) {
-                log.error("Could not remove member: "+ memberIp,e);
+                log.error("Could not remove member: " + memberIp, e);
             }
         }
 
