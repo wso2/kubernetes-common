@@ -117,7 +117,7 @@ public class KubernetesMembershipScheme implements HazelcastMembershipScheme {
             Set<String> containerIPs = getK8sPodIpAddresses();
             // if no IPs are found, can't initialize clustering
             if (containerIPs.isEmpty()) {
-                throw new KubernetesMembershipSchemeException("No member ips found, unable to initialize the "
+                throw new KubernetesMembershipSchemeException("No members found, unable to initialize the "
                         + "Kubernetes membership scheme");
             }
 
