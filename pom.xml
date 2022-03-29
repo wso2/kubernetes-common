@@ -269,7 +269,7 @@
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
-                <version>${jackson.version}</version>
+                <version>${jackson.databind.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
@@ -302,7 +302,8 @@
         <axis2.version>1.6.1-wso2v40</axis2.version>
         <commons.logging.version>1.1.1</commons.logging.version>
         <hazelcast.version>3.12.2.wso2v1</hazelcast.version>
-        <jackson.version>2.12.3</jackson.version>
+	<jackson.version>2.13.2</jackson.version>
+	<jackson.databind.version>2.13.2.1</jackson.databind.version>
         <ppaas.version>4.1.5</ppaas.version>
         <mockserver.version>3.10.4</mockserver.version>
         <testng.version>6.9.9</testng.version>
