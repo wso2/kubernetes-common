@@ -16,10 +16,13 @@
 
 package org.wso2.carbon.membership.scheme.kubernetes;
 
+import com.hazelcast.cluster.Member;
+import com.hazelcast.cluster.MembershipEvent;
+import com.hazelcast.cluster.MembershipListener;
 import com.hazelcast.config.Config;
 import com.hazelcast.config.NetworkConfig;
 import com.hazelcast.config.TcpIpConfig;
-import com.hazelcast.core.*;
+import com.hazelcast.core.HazelcastInstance;
 import org.apache.axis2.clustering.ClusteringFault;
 import org.apache.axis2.clustering.ClusteringMessage;
 import org.apache.axis2.description.Parameter;
@@ -203,13 +206,6 @@ public class KubernetesMembershipScheme implements HazelcastMembershipScheme {
                 }
             } catch (KubernetesMembershipSchemeException e) {
                 log.error("Could not remove member: " + memberIp, e);
-            }
-        }
-
-        @Override public void memberAttributeChanged(MemberAttributeEvent memberAttributeEvent) {
-            if (log.isDebugEnabled()) {
-                log.debug(String.format("Member attribute changed: [Key] %s, [Value] %s", memberAttributeEvent.getKey(),
-                        memberAttributeEvent.getValue()));
             }
         }
     }
