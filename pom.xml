@@ -302,13 +302,13 @@
         <axis2.version>1.6.1-wso2v40</axis2.version>
         <commons.logging.version>1.1.1</commons.logging.version>
         <hazelcast.version>3.12.2.wso2v1</hazelcast.version>
-	<jackson.version>2.13.4</jackson.version>
-	<jackson.databind.version>2.13.4.2</jackson.databind.version>
+        <jackson.version>2.14.1</jackson.version>
+        <jackson.databind.version>2.14.1</jackson.databind.version>
         <ppaas.version>4.1.5</ppaas.version>
         <mockserver.version>3.10.4</mockserver.version>
         <testng.version>6.9.9</testng.version>
         <dnsjava.version>2.1.8</dnsjava.version>
         <project.scm.id>my-scm-server</project.scm.id>
-        <maven.bundle.plugin.version>3.5.0</maven.bundle.plugin.version>
+        <maven.bundle.plugin.version>4.2.0</maven.bundle.plugin.version>
     </properties>
 </project>
