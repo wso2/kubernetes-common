@@ -303,7 +303,7 @@
         <commons.logging.version>1.1.1</commons.logging.version>
         <hazelcast.version>3.12.2.wso2v1</hazelcast.version>
         <jackson.version>2.14.1</jackson.version>
-        <jackson.databind.version>2.14.1</jackson.databind.version>
+        <jackson.databind.version>2.18.3</jackson.databind.version>
         <ppaas.version>4.1.5</ppaas.version>
         <mockserver.version>3.10.4</mockserver.version>
         <testng.version>6.9.9</testng.version>
